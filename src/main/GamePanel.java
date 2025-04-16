@@ -94,18 +94,28 @@ public class GamePanel extends JPanel implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
+        long timer = 0;
+        int frames = 0;
 
         while (gameThread != null) {
 
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
+            timer += (currentTime - lastTime);
             lastTime = currentTime;
 
             if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
+                frames++;
+            }
 
+            // FPS CHECK
+            if (timer >= 1000000000) {
+                System.out.println("FPS:" + frames);
+                frames = 0;
+                timer = 0;
             }
         }
     }
@@ -151,7 +161,6 @@ public class GamePanel extends JPanel implements Runnable {
 // // 2 DRAW: draw the screen with the updated information
 // // the paintComponent method == repaint();
 // repaint();
-
 // // GAME LOOP #1
 // // try {
 // // double remainingTime = nextDrawTime - System.nanoTime();
