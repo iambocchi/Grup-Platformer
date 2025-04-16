@@ -9,23 +9,6 @@ import main.GamePanel;
 public class MouseHandler implements MouseListener, MouseMotionListener {
 
     private GamePanel gamePanel;
-    // private int xDelta = 0, yDelta = 0;
-
-    // public int getxDelta() {
-    // return xDelta;
-    // }
-
-    // public void setxDelta(int xDelta) {
-    // this.xDelta = xDelta;
-    // }
-
-    // public int getyDelta() {
-    // return yDelta;
-    // }
-
-    // public void setyDelta(int yDelta) {
-    // this.yDelta = yDelta;
-    // }
 
     public MouseHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
