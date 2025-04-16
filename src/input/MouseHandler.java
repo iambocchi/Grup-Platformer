@@ -35,7 +35,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {
 
-        System.out.println("I DRAG");
     }
 
     @Override
@@ -48,7 +47,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        System.out.println("I CLICKED");
     }
 
     @Override
@@ -59,7 +57,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
     @Override
     public void mouseReleased(MouseEvent e) {
 
-        System.out.println("I RELEASH");
     }
 
     @Override

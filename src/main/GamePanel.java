@@ -65,14 +65,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (xDelta > SCREENWIDTH - TILESIZE || xDelta < 0) {
             xDir *= -1;
             recColor = getRndColor();
-            System.out.println(recColor);
             update();
         }
         yDelta += yDir;
         if (yDelta > SCREENHEIGHT - TILESIZE || yDelta < 0) {
             yDir *= -1;
             recColor = getRndColor();
-            System.out.println(recColor);
             update();
         }
 
@@ -100,7 +98,6 @@ public class GamePanel extends JPanel implements Runnable {
         while (gameThread != null) {
 
             currentTime = System.nanoTime();
-
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
 
@@ -108,6 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
                 update();
                 repaint();
                 delta--;
+
             }
         }
     }
@@ -151,7 +149,7 @@ public class GamePanel extends JPanel implements Runnable {
 // // 1 UPDATE: update information such as character position
 // update();
 // // 2 DRAW: draw the screen with the updated information
-// // the paintComponent method == repain();
+// // the paintComponent method == repaint();
 // repaint();
 
 // // GAME LOOP #1
