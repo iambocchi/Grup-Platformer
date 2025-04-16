@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Player;
+
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
 
@@ -24,6 +26,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+
+    // initiate player
+    Player player = new Player(keyH);
 
     // set player's default position
     int playerX = 100;
@@ -91,38 +96,19 @@ public class GamePanel extends JPanel implements Runnable {
             currentTime = System.nanoTime();
 
             delta += (currentTime - lastTime) / drawInterval;
-            // timer += (currentTime - lastTime); GET FPS!
             lastTime = currentTime;
 
             if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
-                // drawcount++; GET FPS!
             }
-            // GET FPS!
-            // if (timer >= 1000000000) {
-            // System.out.println("FPS: " + drawcount);
-            // drawcount = 0;
-            // timer = 0;
-            // }
         }
     }
 
     public void update() {
 
-        if (keyH.upPressed == true) {
-            playerY -= playerSpeed;
 
-        } else if (keyH.downPressed == true) {
-            playerY += playerSpeed;
-
-        } else if (keyH.leftPressed) {
-            playerX -= playerSpeed;
-
-        } else if (keyH.rightPressed) {
-            playerX += playerSpeed;
-        }
     }
 
     public void paintComponent(Graphics g) {
@@ -131,9 +117,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.white);
-
-        g2.fillRect(playerX, playerY, TILESIZE, TILESIZE);
+        // if (player != null) {
+        // g2.draw(player);
+        // }
         g2.dispose();
     }
 }

@@ -2,5 +2,7 @@ package entity;
 
 public class Entity {
 
-    // s
+    public int x, y;
+    public int speed;
+
 }
