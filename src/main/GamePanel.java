@@ -15,7 +15,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     final static int ORIGINALTILESIZE = 16; // 16x16 tile
     final static int SCALE = 3;
-
     public static final int TILESIZE = ORIGINALTILESIZE * SCALE; // 48x48 tile
     final static int MAXSCREENCOL = 16;
     final int MAXSCREENROW = 12;
@@ -25,9 +24,12 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
+    //
     KeyHandler keyH = new KeyHandler();
-    MouseHandler mouseH = new MouseHandler();
+    MouseHandler mouseH = new MouseHandler(this);
     Thread gameThread;
+
+    // mouse position
 
     // initiate player
     Player player = new Player(keyH);
@@ -42,6 +44,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseMotionListener(mouseH);
         this.setFocusable(true);
 
+    }
+
+    // MOUSE INPUT IN AREA
+    public void setRecPos(int x, int y) {
+        mouseH.setxDelta(x);
+        mouseH.setyDelta(y);
+        repaint();
     }
 
     public void startGameThread() {
@@ -83,11 +92,12 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
         if (player != null) {
             player.draw(g2);
-            ;
         }
+        g2.setColor(Color.GREEN);
+        g2.fillRect(mouseH.getxDelta(), mouseH.getyDelta(), TILESIZE, TILESIZE);
+
         g2.dispose();
     }
 }
