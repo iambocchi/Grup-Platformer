@@ -9,23 +9,23 @@ import main.GamePanel;
 public class MouseHandler implements MouseListener, MouseMotionListener {
 
     private GamePanel gamePanel;
-    private int xDelta = 0, yDelta = 0;
+    // private int xDelta = 0, yDelta = 0;
 
-    public int getxDelta() {
-        return xDelta;
-    }
+    // public int getxDelta() {
+    // return xDelta;
+    // }
 
-    public void setxDelta(int xDelta) {
-        this.xDelta = xDelta;
-    }
+    // public void setxDelta(int xDelta) {
+    // this.xDelta = xDelta;
+    // }
 
-    public int getyDelta() {
-        return yDelta;
-    }
+    // public int getyDelta() {
+    // return yDelta;
+    // }
 
-    public void setyDelta(int yDelta) {
-        this.yDelta = yDelta;
-    }
+    // public void setyDelta(int yDelta) {
+    // this.yDelta = yDelta;
+    // }
 
     public MouseHandler(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -40,8 +40,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        gamePanel.setRecPos(e.getX(), e.getY());
-        System.out.println(e.getX() + " || " + e.getY());
+        // gamePanel.setRecPos(e.getX(), e.getY());
+        // System.out.println(e.getX() + " || " + e.getY());
     }
 
     // MOUSELISTENER

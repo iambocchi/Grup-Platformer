@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Random;
+
 import javax.swing.JPanel;
 
 import entity.Player;
@@ -11,8 +13,8 @@ import input.KeyHandler;
 import input.MouseHandler;
 
 public class GamePanel extends JPanel implements Runnable {
-    // SCREEN SETTINGS
 
+    // SCREEN SETTINGS
     final static int ORIGINALTILESIZE = 16; // 16x16 tile
     final static int SCALE = 3;
     public static final int TILESIZE = ORIGINALTILESIZE * SCALE; // 48x48 tile
@@ -24,11 +26,16 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
-    //
+    // initialization
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseH = new MouseHandler(this);
     Thread gameThread;
+    Random random = new Random();
+    Color recColor;
 
+    // variables
+    int xDelta = random.nextInt(SCREENWIDTH - TILESIZE), yDelta = random.nextInt(SCREENHEIGHT - TILESIZE);
+    int xDir = 8, yDir = 8;
     // mouse position
 
     // initiate player
@@ -47,10 +54,35 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     // MOUSE INPUT IN AREA
-    public void setRecPos(int x, int y) {
-        mouseH.setxDelta(x);
-        mouseH.setyDelta(y);
-        repaint();
+    // public void setRecPos(int x, int y) {
+    // mouseH.setxDelta(x);
+    // mouseH.setyDelta(y);
+    // repaint();
+    // }
+
+    public void bouncingRec() {
+        xDelta += xDir;
+        if (xDelta > SCREENWIDTH - TILESIZE || xDelta < 0) {
+            xDir *= -1;
+            recColor = getRndColor();
+            System.out.println(recColor);
+            update();
+        }
+        yDelta += yDir;
+        if (yDelta > SCREENHEIGHT - TILESIZE || yDelta < 0) {
+            yDir *= -1;
+            recColor = getRndColor();
+            System.out.println(recColor);
+            update();
+        }
+
+    }
+
+    public Color getRndColor() {
+        int r = random.nextInt(255);
+        int g = random.nextInt(255);
+        int b = random.nextInt(255);
+        return new Color(r, g, b);
     }
 
     public void startGameThread() {
@@ -92,11 +124,14 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
+
         if (player != null) {
             player.draw(g2);
         }
-        g2.setColor(Color.GREEN);
-        g2.fillRect(mouseH.getxDelta(), mouseH.getyDelta(), TILESIZE, TILESIZE);
+
+        bouncingRec();
+        g2.setColor(recColor);
+        g2.fillRect(xDelta, yDelta, TILESIZE, TILESIZE);
 
         g2.dispose();
     }
