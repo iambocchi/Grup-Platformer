@@ -1,43 +1,66 @@
 package entity;
 
-import static main.GamePanel.TILESIZE;
-import static main.GamePanel.SCREENWIDTH;
-
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import input.KeyHandler;
+import main.GamePanel;
 
 public class Player extends Entity {
-    int playerY = y;
-    int playerX = x;
-    int playerSpeed = speed;
-
+    GamePanel gp;
     KeyHandler keyH;
 
-    public Player(KeyHandler keyH) {
+    // private BufferedImage img;
+
+    public Player(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
+        this.gp = gp;
+        setDefaultValues();
+        // getPlayerImage();
+    }
+
+    public void setDefaultValues() {
+        x = 120;
+        y = 120;
+        speed = 12;
+        direction = "down";
+    }
+
+    public void getPlayerImage() {
+
+        try {
+            myImage = ImageIO.read(getClass().getResourceAsStream("res\\player\\Pink_Monster.png"));
+        } catch (Exception e) {
+
+        }
     }
 
     public void update() {
+
         if (keyH.upPressed) {
-            playerY -= playerSpeed;
+            y -= speed;
 
         } else if (keyH.downPressed) {
-            playerY += playerSpeed;
+            y += speed;
 
-        } else if (keyH.leftPressed && playerX > 0) {
-            playerX -= playerSpeed;
+        } else if (keyH.leftPressed) {
+            x -= speed;
 
-        } else if (keyH.rightPressed && playerX < SCREENWIDTH - TILESIZE) {
-            playerX += playerSpeed;
+        } else if (keyH.rightPressed) {
+            x += speed;
         }
 
     }
 
-    public void draw(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(playerX, playerY, TILESIZE, TILESIZE);
+    public void draw(Graphics2D g2) {
+        try {
+
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("\\res\\player\\Pink_Monster.png"));
+            g2.drawImage(image, x, y, gp.TILESIZE, gp.TILESIZE, null);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 }
