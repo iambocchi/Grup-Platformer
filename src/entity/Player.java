@@ -2,9 +2,6 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
-
 import javax.imageio.ImageIO;
 import input.KeyHandler;
 import main.GamePanel;
@@ -12,48 +9,31 @@ import main.GamePanel;
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
-    BufferedImage img;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
         this.gp = gp;
         setDefaultValues();
-        importImg();
+        getPlayerImage();
     }
 
     public void setDefaultValues() {
         x = 100;
         y = 100;
         speed = 4;
-        // direction = "down";
-    }
-
-    public void importImg() {
-        InputStream is = getClass().getResourceAsStream("/sprites/Pink_Monster.png");
-        try {
-            img = ImageIO.read(is);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void getPlayerImage() {
 
         try {
-            myImage = ImageIO.read(getClass().getResourceAsStream("/res/Pink_Monster.png"));
+            System.out.println(getClass().getResource("/Pink_Monster.png"));
+
+            myImage = ImageIO.read(getClass().getResourceAsStream("/Pink_Monster.png"));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("error");
         }
     }
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     public void update() {
 
         if (keyH.upPressed) {
@@ -73,6 +53,7 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
         try {
+            BufferedImage img = myImage;
             g2.drawImage(img, x, y, gp.TILESIZE, gp.TILESIZE, null);
         } catch (Exception e) {
 
