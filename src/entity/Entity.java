@@ -2,10 +2,15 @@ package entity;
 
 import java.awt.image.BufferedImage;
 
-public class Entity {
+public abstract class Entity {
+    protected int speed;
+    protected BufferedImage myImage;
+    protected int defaultStance;
+    protected String action;
+    protected int x, y;
 
-    public int x, y;
-    public int speed;
-    public BufferedImage myImage;
-    public int defaultStance;
+    public Entity() {
+
+    }
+
 }

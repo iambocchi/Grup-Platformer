@@ -28,10 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
     // initialization
     KeyHandler keyH = new KeyHandler();
     MouseHandler mouseH = new MouseHandler(this);
-    Thread gameThread;
-
-    // initiate player
     Player player = new Player(this, keyH);
+    Thread gameThread;
 
     public GamePanel() {
 
@@ -43,6 +41,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.addMouseMotionListener(mouseH);
         this.setFocusable(true);
 
+    }
+
+    public void windowFocusLost() {
+        player.resetMoveBoleans();
     }
 
     public void startGameThread() {

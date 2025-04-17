@@ -10,7 +10,6 @@ import assets.Images;
 public class Player extends Entity {
     private int aniTick, aniIndex, aniSpeed = 15;
     private String previousAction = "";
-    private String player_action;
 
     private GamePanel gp;
     private KeyHandler keyH;
@@ -18,8 +17,9 @@ public class Player extends Entity {
     private BufferedImage[] playerAnimation;
     public BufferedImage img;
 
-    // AI
+    // D akin
     private boolean isJumping = false;
+    private boolean isMoving = false;
     private double velocityY = 0;
     private final double gravity = 0.3;
     private final double jumpStrength = -10;
@@ -29,7 +29,7 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.gp = gp;
         setDefaultValues();
-        setPlayerAction(player_action);
+        setPlayerAction(action);
     }
 
     public void setDefaultValues() {
@@ -37,19 +37,25 @@ public class Player extends Entity {
         y = 500;
         speed = 4;
         defaultStance = 1;
-        player_action = "ATTACK1";
+        action = "ATTACK1";
     }
 
-    // public void playerAnimations() {
-    // playerAnimation = new BufferedImage[4];
-    // for (int i = 0; i < playerAnimation.length; i++) {
-    // playerAnimation[i] = img.getSubimage(i * 32, 0, 32, 32);
+    public void update() {
+        updateAnimationTick();
+        playerMovement();
+    }
 
-    // }
-    // }
+    public void resetMoveBoleans() {
 
-    public void setPlayerAction(String player_action) {
-        switch (player_action) {
+        action = "IDLE";
+        keyH.leftPressed = false;
+        keyH.rightPressed = false;
+        keyH.upPressed = false;
+        keyH.downPressed = false;
+    }
+
+    public void setPlayerAction(String action) {
+        switch (action) {
             case "IDLE" -> img = asset.IDLE;
             case "ATTACK1" -> img = asset.ATTACK1;
             case "ATTACK2" -> img = asset.ATTACK2;
@@ -86,46 +92,53 @@ public class Player extends Entity {
         }
     }
 
-    public void update() {
-        updateAnimationTick();
+    public void playerMovement() {
+        isMoving = false;
         // Horizontal movement
-        if (keyH.leftPressed) {
+        if (keyH.leftPressed == true) {
             x -= speed;
-            if (!isJumping)
-                player_action = "RUN";
+            isMoving = true;
         }
-        if (keyH.rightPressed) {
+        if (keyH.rightPressed == true) {
             x += speed;
-            if (!isJumping)
-                player_action = "RUN";
+            isMoving = true;
         }
+
+        // Set run animation if on ground and moving
+        if (isMoving && !isJumping) {
+            action = "RUN";
+        }
+
         // Jumping
         if (keyH.upPressed && !isJumping) {
             isJumping = true;
             velocityY = jumpStrength;
-            player_action = "JUMP";
+            action = "JUMP";
         }
+
         // Apply gravity
         if (isJumping) {
             y += velocityY;
             velocityY += gravity;
+
             if (y >= groundY) {
                 y = groundY;
                 isJumping = false;
                 velocityY = 0;
-                player_action = "IDLE";
+                action = isMoving ? "RUN" : "IDLE";
             }
         }
-        // Idle if not moving
-        if (!keyH.leftPressed && !keyH.rightPressed && !keyH.upPressed && !isJumping) {
-            player_action = "IDLE";
+
+        // Idle state
+        if (!isMoving && !keyH.upPressed && !isJumping) {
+            action = "IDLE";
         }
     }
 
     public void draw(Graphics2D g2) {
-        if (!player_action.equals(previousAction)) {
-            setPlayerAction(player_action);
-            previousAction = player_action;
+        if (!action.equals(previousAction)) {
+            setPlayerAction(action);
+            previousAction = action;
         }
         if (playerAnimation != null && aniIndex < playerAnimation.length) {
             g2.drawImage(playerAnimation[aniIndex], x, y, gp.TILESIZE, gp.TILESIZE, null);

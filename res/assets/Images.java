@@ -19,7 +19,7 @@ public class Images {
 
     public Images() {
         try {
-
+            // player
             ATTACK1 = ImageIO.read(getClass().getResourceAsStream("/pixel/owlet monster/Owlet_Monster_Attack1_4.png"));
             ATTACK2 = ImageIO.read(getClass().getResourceAsStream("/pixel/owlet monster/Owlet_Monster_Attack2_6.png"));
             CLIMB = ImageIO.read(getClass().getResourceAsStream("/pixel/owlet monster/Owlet_Monster_Climb_4.png"));
