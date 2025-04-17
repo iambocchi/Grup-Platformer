@@ -2,19 +2,23 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import input.KeyHandler;
 import main.GamePanel;
+import assets.Images;
 
 public class Player extends Entity {
-    GamePanel gp;
-    KeyHandler keyH;
+    private int aniTick, aniIndex, aniSpeed = 15;
+    private GamePanel gp;
+    private KeyHandler keyH;
+    private Images asset = new Images();
+    private BufferedImage[][] playerAnimation;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
         this.gp = gp;
         setDefaultValues();
-        getPlayerImage();
+        playerAnimations();
+
     }
 
     public void setDefaultValues() {
@@ -23,15 +27,24 @@ public class Player extends Entity {
         speed = 4;
     }
 
-    public void getPlayerImage() {
-
-        try {
-            System.out.println(getClass().getResource("/Pink_Monster.png"));
-
-            myImage = ImageIO.read(getClass().getResourceAsStream("/Pink_Monster.png"));
-        } catch (Exception e) {
-            System.out.println("error");
+    public void playerAnimations() {
+        playerAnimation = new BufferedImage[16][8];
+        for (int i = 0; i < playerAnimation.length; i++) {
+            for (int j = 0; j < playerAnimation[i].length; j++) {
+                playerAnimation[i][j] = asset.playerAni.getSubimage(i * 12, j * 32, 32, 32);
+            }
         }
+    }
+
+    public void updateAnimationTick() {
+        // aniTick++;
+        // if (aniTick >= aniSpeed) {
+        // aniTick = 0;
+        // aniIndex++;
+        // if (aniIndex >= playerAnimation.length) {
+        // aniIndex = 0;
+        // }
+        // }
     }
 
     public void update() {
@@ -52,11 +65,8 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        try {
-            BufferedImage img = myImage;
-            g2.drawImage(img, x, y, gp.TILESIZE, gp.TILESIZE, null);
-        } catch (Exception e) {
 
-        }
+        updateAnimationTick();
+        g2.drawImage(playerAnimation[8][1], x, y, gp.TILESIZE, gp.TILESIZE, null);
     }
 }

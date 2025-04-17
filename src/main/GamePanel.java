@@ -14,16 +14,16 @@ import input.MouseHandler;
 public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
-    final int ORIGINALTILESIZE = 16; // 16x16 tile
+    public final int ORIGINALTILESIZE = 16; // 16x16 tile
     final int SCALE = 3;
     public final int TILESIZE = ORIGINALTILESIZE * SCALE; // 48x48 tile
-    final int MAXSCREENCOL = 16;
-    final int MAXSCREENROW = 12;
+    final int MAXSCREENCOL = 18;
+    final int MAXSCREENROW = 10;
     public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL; // 768 pixel
     public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW; // 576 pixel
 
     // FPS
-    int FPS = 60;
+    int FPS = 120;
 
     // initialization
     KeyHandler keyH = new KeyHandler();
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(SCREENWIDTH, SCREENHEIGHT));
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.addMouseListener(mouseH);
