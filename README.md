@@ -1,4 +1,3 @@
 ## Hello
-
-## Just doing this for fun
+![Image of me.](GameIcon.jpg)
 
