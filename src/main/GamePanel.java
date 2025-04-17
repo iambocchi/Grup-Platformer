@@ -14,13 +14,13 @@ import input.MouseHandler;
 public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
-    public final int ORIGINALTILESIZE = 16; // 16x16 tile
-    final int SCALE = 3;
-    public final int TILESIZE = ORIGINALTILESIZE * SCALE; // 48x48 tile
+    public final int ORIGINALTILESIZE = 16;
+    final int SCALE = 4;
+    public final int TILESIZE = ORIGINALTILESIZE * SCALE;
     final int MAXSCREENCOL = 18;
     final int MAXSCREENROW = 10;
-    public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL; // 768 pixel
-    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW; // 576 pixel
+    public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL;
+    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW;
 
     // FPS
     int FPS = 120;

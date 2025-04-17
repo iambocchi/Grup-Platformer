@@ -7,5 +7,5 @@ public class Entity {
     public int x, y;
     public int speed;
     public BufferedImage myImage;
-    public String direction;
+    public int defaultStance;
 }
