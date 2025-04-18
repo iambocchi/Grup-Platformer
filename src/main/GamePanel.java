@@ -100,8 +100,6 @@ public class GamePanel extends JPanel implements Runnable {
         levelM.draw(g2);
         player.draw(g2);
 
-        // g2.drawImage(null, 100, 100, null);
-
         g2.dispose();
     }
 }
