@@ -4,8 +4,20 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import input.KeyHandler;
 import main.GamePanel;
+import utils.LoadSave;
 
-import assets.Images;
+import static utils.LoadSave.GetSpriteAtlas;
+import static utils.LoadSave.PLAYER_ATTACK1;
+import static utils.LoadSave.PLAYER_ATTACK2;
+import static utils.LoadSave.PLAYER_CLIMB;
+import static utils.LoadSave.PLAYER_DEATH;
+import static utils.LoadSave.PLAYER_HURT;
+import static utils.LoadSave.PLAYER_IDLE;
+import static utils.LoadSave.PLAYER_JUMP;
+import static utils.LoadSave.PLAYER_PUSH;
+import static utils.LoadSave.PLAYER_RUN;
+import static utils.LoadSave.PLAYER_THROW;
+import static utils.LoadSave.PLAYER_WALK;
 
 public class Player extends Entity {
     private int aniTick, aniIndex, aniSpeed = 15;
@@ -13,16 +25,12 @@ public class Player extends Entity {
 
     private GamePanel gp;
     private KeyHandler keyH;
-    private Images asset = new Images();
     private BufferedImage[] playerAnimation;
     public BufferedImage img;
 
     // D akin
     private boolean isJumping = false;
     private boolean isMoving = false;
-    private double velocityY = 0;
-    private final double gravity = 0.3;
-    private final double jumpStrength = -10;
     private final int groundY = 500; // Adjust based on ground level in your game
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -33,11 +41,12 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
+        velocityY = 0;
         x = 100;
         y = 500;
         speed = 4;
         defaultStance = 1;
-        action = "ATTACK1";
+        action = "IDLE";
     }
 
     public void update() {
@@ -45,6 +54,7 @@ public class Player extends Entity {
         playerMovement();
     }
 
+    // stops player if go to other window
     public void resetMoveBoleans() {
 
         action = "IDLE";
@@ -56,18 +66,18 @@ public class Player extends Entity {
 
     public void setPlayerAction(String action) {
         switch (action) {
-            case "IDLE" -> img = asset.IDLE;
-            case "ATTACK1" -> img = asset.ATTACK1;
-            case "ATTACK2" -> img = asset.ATTACK2;
-            case "CLIMB" -> img = asset.CLIMB;
-            case "DEATH" -> img = asset.DEATH;
-            case "HURT" -> img = asset.HURT;
-            case "JUMP" -> img = asset.JUMP;
-            case "PUSH" -> img = asset.PUSH;
-            case "RUN" -> img = asset.RUN;
-            case "THROW" -> img = asset.THROW;
-            case "WALK" -> img = asset.WALK;
-            default -> img = asset.IDLE; // fallback
+            case "IDLE" -> img = LoadSave.GetSpriteAtlas(PLAYER_IDLE);
+            case "ATTACK1" -> img = LoadSave.GetSpriteAtlas(PLAYER_ATTACK1);
+            case "ATTACK2" -> img = LoadSave.GetSpriteAtlas(PLAYER_ATTACK2);
+            case "CLIMB" -> img = LoadSave.GetSpriteAtlas(PLAYER_CLIMB);
+            case "DEATH" -> img = LoadSave.GetSpriteAtlas(PLAYER_DEATH);
+            case "HURT" -> img = LoadSave.GetSpriteAtlas(PLAYER_HURT);
+            case "JUMP" -> img = LoadSave.GetSpriteAtlas(PLAYER_JUMP);
+            case "PUSH" -> img = LoadSave.GetSpriteAtlas(PLAYER_PUSH);
+            case "RUN" -> img = LoadSave.GetSpriteAtlas(PLAYER_RUN);
+            case "THROW" -> img = LoadSave.GetSpriteAtlas(PLAYER_THROW);
+            case "WALK" -> img = LoadSave.GetSpriteAtlas(PLAYER_WALK);
+            default -> img = LoadSave.GetSpriteAtlas(PLAYER_IDLE); // fallback
 
         }
         if (img != null) {
@@ -112,14 +122,14 @@ public class Player extends Entity {
         // Jumping
         if (keyH.upPressed && !isJumping) {
             isJumping = true;
-            velocityY = jumpStrength;
+            velocityY = JUMPSTRENGTH;
             action = "JUMP";
         }
 
         // Apply gravity
         if (isJumping) {
             y += velocityY;
-            velocityY += gravity;
+            velocityY += GRAVITY;
 
             if (y >= groundY) {
                 y = groundY;
