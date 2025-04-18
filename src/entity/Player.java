@@ -32,13 +32,19 @@ public class Player extends Entity {
         velocityY = 0;
         x = 100;
         y = gp.TILESIZE * 8;
-        speed = 4;
+        speed = 2;
         action = "IDLE";
     }
 
     public void update() {
-        updateAnimationTick();
         playerMovement();
+
+        if (!action.equals(previousAction)) {
+            setPlayerAction(action);
+            previousAction = action;
+        }
+
+        updateAnimationTick();
     }
 
     // stops player if go to other window
@@ -75,7 +81,6 @@ public class Player extends Entity {
                 playerAnimation[i] = img.getSubimage(i * frameWidth, 0, gp.TILESIZE, gp.TILESIZE);
             }
         }
-        System.out.println("this is the width: " + img.getWidth());
     }
 
     public void updateAnimationTick() {
@@ -91,18 +96,19 @@ public class Player extends Entity {
 
     public void playerMovement() {
         isMoving = false;
+
         // Horizontal movement
-        if (keyH.leftPressed == true) {
+        if (keyH.leftPressed) {
             x -= speed;
             isMoving = true;
         }
-        if (keyH.rightPressed == true) {
+        if (keyH.rightPressed) {
             x += speed;
             isMoving = true;
         }
 
         // Set run animation if on ground and moving
-        if (isMoving && !isJumping) {
+        if (isMoving && !isJumping && !action.equals("RUN")) {
             action = "RUN";
         }
 
@@ -110,7 +116,9 @@ public class Player extends Entity {
         if (keyH.upPressed && !isJumping) {
             isJumping = true;
             velocityY = JUMPSTRENGTH;
-            action = "JUMP";
+            if (!action.equals("JUMP")) {
+                action = "JUMP";
+            }
         }
 
         // Apply gravity
@@ -122,21 +130,21 @@ public class Player extends Entity {
                 y = groundY;
                 isJumping = false;
                 velocityY = 0;
-                action = isMoving ? "RUN" : "IDLE";
+                if (isMoving && !action.equals("RUN")) {
+                    action = "RUN";
+                } else if (!isMoving && !action.equals("IDLE")) {
+                    action = "IDLE";
+                }
             }
         }
 
         // Idle state
-        if (!isMoving && !keyH.upPressed && !isJumping) {
+        if (!isMoving && !keyH.upPressed && !isJumping && !action.equals("IDLE")) {
             action = "IDLE";
         }
     }
 
     public void draw(Graphics2D g2) {
-        if (!action.equals(previousAction)) {
-            setPlayerAction(action);
-            previousAction = action;
-        }
         if (playerAnimation != null && aniIndex < playerAnimation.length) {
             g2.drawImage(playerAnimation[aniIndex], x, y, gp.TILESIZE, gp.TILESIZE, null);
         }

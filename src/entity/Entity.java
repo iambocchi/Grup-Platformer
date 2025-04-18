@@ -11,7 +11,7 @@ public class Entity {
 
     protected double velocityY = 0;
     protected final double GRAVITY = 0.3;
-    protected final double JUMPSTRENGTH = -10;
+    protected final double JUMPSTRENGTH = -8;
 
     public Entity() {
 
