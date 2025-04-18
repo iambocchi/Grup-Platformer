@@ -20,8 +20,8 @@ public class LevelHandler {
         System.out.println(img.getWidth());
         if (img != null) {
             // 32 or 16
-            int frameWidth = 16;
-            int frameHeight = 16;
+            int frameWidth = 32;
+            int frameHeight = 32;
 
             int totalRows = img.getHeight() / frameHeight;
             int totalCols = img.getWidth() / frameWidth;

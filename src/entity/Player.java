@@ -72,7 +72,7 @@ public class Player extends Entity {
             int totalFrames = img.getWidth() / frameWidth;
             playerAnimation = new BufferedImage[totalFrames];
             for (int i = 0; i < totalFrames; i++) {
-                playerAnimation[i] = img.getSubimage(i * frameWidth, 0, frameWidth, 32);
+                playerAnimation[i] = img.getSubimage(i * frameWidth, 0, gp.ORIGINALTILESIZE, gp.ORIGINALTILESIZE);
             }
         }
         System.out.println("this is the width: " + img.getWidth());
