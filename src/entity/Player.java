@@ -18,7 +18,7 @@ public class Player extends Entity {
     // D akin
     private boolean isJumping = false;
     private boolean isMoving = false;
-    private final int groundY = 500; // Adjust based on ground level in your game
+    private int groundY; // Adjust based on ground level in your game
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
@@ -28,11 +28,11 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
+        groundY = gp.TILESIZE * 8;
         velocityY = 0;
         x = 100;
-        y = 500;
+        y = gp.TILESIZE * 8;
         speed = 4;
-        defaultStance = 1;
         action = "IDLE";
     }
 
@@ -72,7 +72,7 @@ public class Player extends Entity {
             int totalFrames = img.getWidth() / frameWidth;
             playerAnimation = new BufferedImage[totalFrames];
             for (int i = 0; i < totalFrames; i++) {
-                playerAnimation[i] = img.getSubimage(i * frameWidth, 0, gp.ORIGINALTILESIZE, gp.ORIGINALTILESIZE);
+                playerAnimation[i] = img.getSubimage(i * frameWidth, 0, gp.TILESIZE, gp.TILESIZE);
             }
         }
         System.out.println("this is the width: " + img.getWidth());

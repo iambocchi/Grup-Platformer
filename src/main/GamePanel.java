@@ -10,18 +10,18 @@ import javax.swing.JPanel;
 import entity.Player;
 import input.KeyHandler;
 import input.MouseHandler;
-import levels.LevelHandler;
+import levels.LevelManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
-    public final int ORIGINALTILESIZE = 32;
-    final float SCALE = 1.5f;
-    public final int TILESIZE = (int) (ORIGINALTILESIZE * SCALE); // 48
-    final int MAXSCREENCOL = 26; // widht
-    final int MAXSCREENROW = 14; // hieght
-    public final int SCREENWIDTH = (int) (TILESIZE * MAXSCREENCOL); // 1248
-    public final int SCREENHEIGHT = (int) (TILESIZE * MAXSCREENROW); // 672
+    public final int ORIGINALTILESIZE = 16;
+    final int SCALE = 2;
+    public final int TILESIZE = ORIGINALTILESIZE * SCALE; // 32
+    public final int MAXSCREENCOL = 26; // widht
+    public final int MAXSCREENROW = 14; // hieght
+    public final int SCREENWIDTH = TILESIZE * MAXSCREENCOL; // 1248
+    public final int SCREENHEIGHT = TILESIZE * MAXSCREENROW; // 672
 
     // FPS
     int FPS = 120;
@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     private KeyHandler keyH = new KeyHandler();
     private MouseHandler mouseH = new MouseHandler(this);
     private Player player = new Player(this, keyH);
-    private LevelHandler levelH = new LevelHandler(this);
+    private LevelManager levelM = new LevelManager(this);
     Thread gameThread;
 
     public GamePanel() {
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        levelH.update();
+        levelM.update();
         player.update();
 
     }
@@ -97,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        levelH.draw(g2);
+        levelM.draw(g2);
         player.draw(g2);
 
         // g2.drawImage(null, 100, 100, null);
