@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import input.KeyHandler;
 import input.MouseHandler;
+import levels.LevelHandler;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -26,9 +27,10 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 120;
 
     // initialization
-    KeyHandler keyH = new KeyHandler();
-    MouseHandler mouseH = new MouseHandler(this);
-    Player player = new Player(this, keyH);
+    private KeyHandler keyH = new KeyHandler();
+    private MouseHandler mouseH = new MouseHandler(this);
+    private Player player = new Player(this, keyH);
+    private LevelHandler levelH = new LevelHandler(this);
     Thread gameThread;
 
     public GamePanel() {
@@ -85,6 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        levelH.update();
         player.update();
 
     }
@@ -94,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
+        levelH.draw(g2);
         player.draw(g2);
 
         // g2.drawImage(null, 100, 100, null);

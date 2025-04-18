@@ -6,19 +6,6 @@ import input.KeyHandler;
 import main.GamePanel;
 import utils.LoadSave;
 
-import static utils.LoadSave.GetSpriteAtlas;
-import static utils.LoadSave.PLAYER_ATTACK1;
-import static utils.LoadSave.PLAYER_ATTACK2;
-import static utils.LoadSave.PLAYER_CLIMB;
-import static utils.LoadSave.PLAYER_DEATH;
-import static utils.LoadSave.PLAYER_HURT;
-import static utils.LoadSave.PLAYER_IDLE;
-import static utils.LoadSave.PLAYER_JUMP;
-import static utils.LoadSave.PLAYER_PUSH;
-import static utils.LoadSave.PLAYER_RUN;
-import static utils.LoadSave.PLAYER_THROW;
-import static utils.LoadSave.PLAYER_WALK;
-
 public class Player extends Entity {
     private int aniTick, aniIndex, aniSpeed = 15;
     private String previousAction = "";
@@ -66,18 +53,18 @@ public class Player extends Entity {
 
     public void setPlayerAction(String action) {
         switch (action) {
-            case "IDLE" -> img = LoadSave.GetSpriteAtlas(PLAYER_IDLE);
-            case "ATTACK1" -> img = LoadSave.GetSpriteAtlas(PLAYER_ATTACK1);
-            case "ATTACK2" -> img = LoadSave.GetSpriteAtlas(PLAYER_ATTACK2);
-            case "CLIMB" -> img = LoadSave.GetSpriteAtlas(PLAYER_CLIMB);
-            case "DEATH" -> img = LoadSave.GetSpriteAtlas(PLAYER_DEATH);
-            case "HURT" -> img = LoadSave.GetSpriteAtlas(PLAYER_HURT);
-            case "JUMP" -> img = LoadSave.GetSpriteAtlas(PLAYER_JUMP);
-            case "PUSH" -> img = LoadSave.GetSpriteAtlas(PLAYER_PUSH);
-            case "RUN" -> img = LoadSave.GetSpriteAtlas(PLAYER_RUN);
-            case "THROW" -> img = LoadSave.GetSpriteAtlas(PLAYER_THROW);
-            case "WALK" -> img = LoadSave.GetSpriteAtlas(PLAYER_WALK);
-            default -> img = LoadSave.GetSpriteAtlas(PLAYER_IDLE); // fallback
+            case "IDLE" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE);
+            case "ATTACK1" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK1);
+            case "ATTACK2" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK2);
+            case "CLIMB" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_CLIMB);
+            case "DEATH" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_DEATH);
+            case "HURT" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_HURT);
+            case "JUMP" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_JUMP);
+            case "PUSH" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_PUSH);
+            case "RUN" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_RUN);
+            case "THROW" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_THROW);
+            case "WALK" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_WALK);
+            default -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE); // fallback
 
         }
         if (img != null) {

@@ -16,6 +16,7 @@ public class LoadSave {
     public static final String PLAYER_RUN = "pixel/owlet monster/Owlet_Monster_Run_6.png";
     public static final String PLAYER_THROW = "pixel/owlet monster/Owlet_Monster_Throw_4.png";
     public static final String PLAYER_WALK = "pixel/owlet monster/Owlet_Monster_Walk_6.png";
+    public static final String TILESET_FOREST = "rockyroads/Tilesets/tileset_forest.png";
 
     public static BufferedImage GetSpriteAtlas(String filename) {
         BufferedImage img = null;
