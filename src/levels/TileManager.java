@@ -2,23 +2,39 @@ package levels;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import utils.LoadSave;
 import main.GamePanel;
 
-public class LevelManager {
+public class TileManager {
 
     private GamePanel gp;
     public Tile[] tile;
     BufferedImage[][] levelSprite;
+    int mapTileNum[][];
 
-    public LevelManager(GamePanel gp) {
+    public TileManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[48];
-        getTileSubImages();
+        mapTileNum = new int[gp.MAXSCREENROW][gp.MAXSCREENCOL];
+        getTileSubImages(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST));
     }
 
-    private void getTileSubImages() {
-        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST);
+    public void loadMap() {
+        try {
+            InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    private void getTileSubImages(BufferedImage tileset/* for 32 x 32 pixel */) {
+        BufferedImage img = tileset;
         int tileIndex = 0;
         int frameWidth = 32;
         int frameHeight = 32;
@@ -28,8 +44,8 @@ public class LevelManager {
             levelSprite = new BufferedImage[totalRows][totalCols];
             for (int row = 0; row < totalRows; row++) {
                 for (int col = 0; col < totalCols; col++) {
-                    levelSprite[row][col] = img.getSubimage(col * frameWidth, row * frameHeight, gp.TILESIZE,
-                            gp.TILESIZE);
+                    levelSprite[row][col] = img.getSubimage(col * frameWidth, row * frameHeight, frameWidth,
+                            frameHeight);
                 }
             }
         }

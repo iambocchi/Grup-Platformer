@@ -10,13 +10,13 @@ import javax.swing.JPanel;
 import entity.Player;
 import input.KeyHandler;
 import input.MouseHandler;
-import levels.LevelManager;
+import levels.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
     public final int ORIGINALTILESIZE = 16;
-    final int SCALE = 2;
+    final int SCALE = 3;
     public final int TILESIZE = ORIGINALTILESIZE * SCALE; // 32
     public final int MAXSCREENCOL = 26; // widht
     public final int MAXSCREENROW = 14; // hieght
@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     private KeyHandler keyH = new KeyHandler();
     private MouseHandler mouseH = new MouseHandler(this);
     private Player player = new Player(this, keyH);
-    private LevelManager levelM = new LevelManager(this);
+    private TileManager levelM = new TileManager(this);
     Thread gameThread;
 
     public GamePanel() {
