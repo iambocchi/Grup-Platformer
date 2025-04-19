@@ -1,6 +1,10 @@
 package utils;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.imageio.ImageIO;
 
 public class LoadSave {
@@ -18,7 +22,22 @@ public class LoadSave {
     public static final String PLAYER_WALK = "pixel/owlet monster/Owlet_Monster_Walk_6.png";
     public static final String TILESET_FOREST = "outside_sprites.png";
 
+    // MAPS
+    public static final String MAP_01 = "maps/map01.txt";
+
     // GET MAP
+    public static BufferedReader GetMap(String filename) {
+        InputStream is = null;
+        BufferedReader br = null;
+        try {
+            is = LoadSave.class.getResourceAsStream("/" + filename);
+            br = new BufferedReader(new InputStreamReader(is));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return br;
+    }
 
     public static BufferedImage GetSpriteAtlas(String filename) {
         BufferedImage img = null;

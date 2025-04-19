@@ -28,10 +28,10 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        groundY = gp.TILESIZE * 8;
+        groundY = gp.TILESIZE * 11;
         velocityY = 0;
         x = 100;
-        y = gp.TILESIZE * 8;
+        y = gp.TILESIZE * 11;
         speed = 2;
         action = "IDLE";
     }

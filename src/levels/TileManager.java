@@ -25,10 +25,12 @@ public class TileManager {
     }
 
     public void loadMap() {
-        try {
-            InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
+        // 26 width COL
+        // 14 height ROW
+        try {
+
+            BufferedReader br = LoadSave.GetMap(LoadSave.MAP_01);
             int col = 0;
             int row = 0;
 
@@ -37,7 +39,7 @@ public class TileManager {
                 while (col < gp.MAXSCREENCOL) {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
-                    mapTileNum[col][row] = num;
+                    mapTileNum[row][col] = num;
                     col++;
                 }
                 if (col == gp.MAXSCREENCOL) {
@@ -45,10 +47,10 @@ public class TileManager {
                     row++;
                 }
             }
+
         } catch (Exception e) {
-            System.out.println("MAP NOT FOUND");
+            e.printStackTrace();
         }
-        br.close();
     }
 
     private void getTileSubImages(BufferedImage tileset/* for 32 x 32 pixel */) {
@@ -90,7 +92,7 @@ public class TileManager {
         int x = 0;
         int y = 0;
 
-        while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW - 2) {
+        while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW) {
 
             int tileNum = mapTileNum[row][col];
             g2.drawImage(tile[tileNum].image, x, y, gp.TILESIZE, gp.TILESIZE, null);
