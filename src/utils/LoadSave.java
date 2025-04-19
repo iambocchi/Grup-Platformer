@@ -18,6 +18,8 @@ public class LoadSave {
     public static final String PLAYER_WALK = "pixel/owlet monster/Owlet_Monster_Walk_6.png";
     public static final String TILESET_FOREST = "outside_sprites.png";
 
+    // GET MAP
+
     public static BufferedImage GetSpriteAtlas(String filename) {
         BufferedImage img = null;
         try {

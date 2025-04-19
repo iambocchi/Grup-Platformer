@@ -20,6 +20,7 @@ public class TileManager {
         this.gp = gp;
         tile = new Tile[48];
         mapTileNum = new int[gp.MAXSCREENROW][gp.MAXSCREENCOL];
+        loadMap();
         getTileSubImages(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST));
     }
 
@@ -45,7 +46,7 @@ public class TileManager {
                 }
             }
         } catch (Exception e) {
-
+            System.out.println("MAP NOT FOUND");
         }
         br.close();
     }
