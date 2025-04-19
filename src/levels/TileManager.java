@@ -28,9 +28,26 @@ public class TileManager {
             InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
+            int col = 0;
+            int row = 0;
+
+            while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW) {
+                String line = br.readLine();
+                while(col < gp.MAXSCREENCOL){
+                    String numbers[] = line.split(" ");
+                    int num = Integer.parseInt(numbers[col]);
+                    mapTileNum[col][row] = num;
+                    col++;
+                }
+                if (col == gp.MAXSCREENCOL) {
+                    col = 0;
+                    row++;
+                }
+            }
         } catch (Exception e) {
 
         }
+        br.close();
     }
 
     private void getTileSubImages(BufferedImage tileset/* for 32 x 32 pixel */) {
@@ -70,6 +87,7 @@ public class TileManager {
         int row = 0;
         int x = 0;
         int y = 0;
+        
         while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW - 2) {
             g2.drawImage(tile[17].image, x, y, gp.TILESIZE, gp.TILESIZE, null);
             col++;
