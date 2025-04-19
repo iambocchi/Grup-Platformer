@@ -33,7 +33,7 @@ public class TileManager {
 
             while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW) {
                 String line = br.readLine();
-                while(col < gp.MAXSCREENCOL){
+                while (col < gp.MAXSCREENCOL) {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
@@ -51,6 +51,7 @@ public class TileManager {
     }
 
     private void getTileSubImages(BufferedImage tileset/* for 32 x 32 pixel */) {
+
         BufferedImage img = tileset;
         int tileIndex = 0;
         int frameWidth = 32;
@@ -87,9 +88,11 @@ public class TileManager {
         int row = 0;
         int x = 0;
         int y = 0;
-        
+
         while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW - 2) {
-            g2.drawImage(tile[17].image, x, y, gp.TILESIZE, gp.TILESIZE, null);
+
+            int tileNum = mapTileNum[row][col];
+            g2.drawImage(tile[tileNum].image, x, y, gp.TILESIZE, gp.TILESIZE, null);
             col++;
             x += gp.TILESIZE;
             if (col == gp.MAXSCREENCOL) {
