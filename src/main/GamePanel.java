@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import input.KeyHandler;
 import input.MouseHandler;
-import levels.TileManager;
+import levels.LevelManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -30,13 +30,13 @@ public class GamePanel extends JPanel implements Runnable {
     private KeyHandler keyH = new KeyHandler();
     private MouseHandler mouseH = new MouseHandler(this);
     private Player player = new Player(this, keyH);
-    private TileManager levelM = new TileManager(this);
+    private LevelManager levelM = new LevelManager(this);
     Thread gameThread;
 
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(SCREENWIDTH, SCREENHEIGHT)); // 1248, 672
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.GRAY);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.addMouseListener(mouseH);

@@ -7,31 +7,43 @@ import java.io.BufferedReader;
 import utils.LoadSave;
 import main.GamePanel;
 
-public class TileManager {
+public class LevelManager {
 
     private GamePanel gp;
     public Tile[] tile;
     BufferedImage[][] levelSprite;
     int mapTileNum[][];
+    String map = "";
 
-    public TileManager(GamePanel gp) {
+    public LevelManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[48];
         mapTileNum = new int[gp.MAXSCREENROW][gp.MAXSCREENCOL];
+        // insert the tileset to get each subimage -> 32 x 32 pixel
+        initTileset(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST));
+
+        // sets the map
+        setMap("MAP_01");
+
+        // loads the map
         loadMap();
-        getTileSubImages(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST));
+
+    }
+
+    public void setMap(String maplist) {
+        switch (maplist) {
+            case "MAP_01" -> map = LoadSave.MAP_01;
+            default -> System.out.println("no map");
+        }
     }
 
     public void loadMap() {
-
-        // 26 width COL
-        // 14 height ROW
         try {
-
-            BufferedReader br = LoadSave.GetMap(LoadSave.MAP_01);
+            // 26 width COL
+            // 14 height ROW
+            BufferedReader br = LoadSave.GetMap(map);
             int col = 0;
             int row = 0;
-
             while (col < gp.MAXSCREENCOL && row < gp.MAXSCREENROW) {
                 String line = br.readLine();
                 while (col < gp.MAXSCREENCOL) {
@@ -45,37 +57,43 @@ public class TileManager {
                     row++;
                 }
             }
-
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-    private void getTileSubImages(BufferedImage tileset/* for 32 x 32 pixel */) {
+    /* for 32 x 32 pixel */
+    private void initTileset(BufferedImage tileset) {
+        if (tileset == null)
+            return;
 
-        BufferedImage img = tileset;
         int tileIndex = 0;
         int frameWidth = 32;
         int frameHeight = 32;
-        int totalRows = img.getHeight() / frameHeight;
-        int totalCols = img.getWidth() / frameWidth;
-        if (img != null) {
+        int totalRows = tileset.getHeight() / frameHeight;
+        int totalCols = tileset.getWidth() / frameWidth;
+        int totalIndex = totalRows * totalCols;
+
+        if (tileset != null) {
             levelSprite = new BufferedImage[totalRows][totalCols];
             for (int row = 0; row < totalRows; row++) {
                 for (int col = 0; col < totalCols; col++) {
-                    levelSprite[row][col] = img.getSubimage(col * frameWidth, row * frameHeight, frameWidth,
+                    levelSprite[row][col] = tileset.getSubimage(col * frameWidth, row * frameHeight, frameWidth,
                             frameHeight);
                 }
             }
         }
         for (int i = 0; i < totalRows; i++) {
             for (int j = 0; j < totalCols; j++) {
-                if (tileIndex >= 48) {
+                if (tileIndex >= totalIndex) {
                     break;
                 }
                 tile[tileIndex] = new Tile();
                 tile[tileIndex].image = levelSprite[i][j];
                 tileIndex++;
+                System.out.println(totalRows + " || " + totalCols);
             }
         }
     }

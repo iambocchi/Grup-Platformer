@@ -1,7 +1,5 @@
 package entity;
 
-import java.awt.image.BufferedImage;
-
 public class Entity {
     protected int speed;
     protected int defaultStance;

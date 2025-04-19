@@ -24,20 +24,20 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.gp = gp;
         setDefaultValues();
-        setPlayerAction(action);
+        updatePlayerAnimation();
     }
 
     public void setDefaultValues() {
         groundY = gp.TILESIZE * 11;
         velocityY = 0;
         x = 100;
-        y = gp.TILESIZE * 11;
+        y = groundY;
         speed = 2;
         action = "IDLE";
 
         // for animation
-        aniTick = 25;
-        aniIndex = 25;
+        aniTick = 0;
+        aniIndex = 0;
         aniSpeed = 25;
     }
 
@@ -45,7 +45,7 @@ public class Player extends Entity {
         playerMovement();
 
         if (!action.equals(previousAction)) {
-            setPlayerAction(action);
+            updatePlayerAnimation();
             previousAction = action;
         }
 
@@ -62,22 +62,21 @@ public class Player extends Entity {
         keyH.downPressed = false;
     }
 
-    public void setPlayerAction(String action) {
-        switch (action) {
-            case "IDLE" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE);
-            case "ATTACK1" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK1);
-            case "ATTACK2" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK2);
-            case "CLIMB" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_CLIMB);
-            case "DEATH" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_DEATH);
-            case "HURT" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_HURT);
-            case "JUMP" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_JUMP);
-            case "PUSH" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_PUSH);
-            case "RUN" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_RUN);
-            case "THROW" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_THROW);
-            case "WALK" -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_WALK);
-            default -> img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE); // fallback
-
-        }
+    public void updatePlayerAnimation() {
+        img = switch (action) {
+            case "IDLE" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE);
+            case "ATTACK1" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK1);
+            case "ATTACK2" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK2);
+            case "CLIMB" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_CLIMB);
+            case "DEATH" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_DEATH);
+            case "HURT" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_HURT);
+            case "JUMP" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_JUMP);
+            case "PUSH" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_PUSH);
+            case "RUN" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_RUN);
+            case "THROW" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_THROW);
+            case "WALK" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_WALK);
+            default -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE); // fallback
+        };
         if (img != null) {
             int frameWidth = 32; // adjust if needed
             int totalFrames = img.getWidth() / frameWidth;
