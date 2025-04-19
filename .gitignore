@@ -1,6 +1,6 @@
 ### Java ###
 # Compiled class file
-#*.class
+*.class
 #bin folder
 #bin/
 # Package Files #
