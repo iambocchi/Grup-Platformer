@@ -7,7 +7,7 @@ import main.GamePanel;
 import utils.LoadSave;
 
 public class Player extends Entity {
-    private int aniTick, aniIndex, aniSpeed = 15;
+
     private String previousAction = "";
 
     private GamePanel gp;
@@ -34,6 +34,11 @@ public class Player extends Entity {
         y = gp.TILESIZE * 11;
         speed = 2;
         action = "IDLE";
+
+        // for animation
+        aniTick = 25;
+        aniIndex = 25;
+        aniSpeed = 25;
     }
 
     public void update() {
