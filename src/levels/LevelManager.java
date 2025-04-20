@@ -98,9 +98,9 @@ public class LevelManager {
                     tile[tileIndex].collision = true;
                 }
                 tileIndex++;
-                System.out.println(totalRows + " || " + totalCols);
             }
         }
+        System.out.println(tile.length);
     }
 
     public void update() {

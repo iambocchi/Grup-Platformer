@@ -17,17 +17,17 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.gp = gp;
         solidArea = new Rectangle();
-        solidArea.x = 4;
-        solidArea.y = 0;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        solidArea.x = 8;
+        solidArea.y = 8;
+        solidArea.width = 24;
+        solidArea.height = 24;
 
         setDefaultValues();
         updatePlayerAnimation();
     }
 
     public void setDefaultValues() {
-        worldX = 100;
+        worldX = 1200;
         worldY = 100;
         speed = 2;
         actionSprite = "IDLE";
@@ -42,7 +42,6 @@ public class Player extends Entity {
     public void update() {
 
         playerMovement();
-        updateAnimationTick();
     }
 
     // stops player if go to other window
@@ -91,6 +90,7 @@ public class Player extends Entity {
         }
     }
 
+    // I DID SOME CHANGE HERE
     public void playerMovement() {
         if (keyH.upPressed == true || keyH.downPressed == true ||
                 keyH.leftPressed == true || keyH.rightPressed == true) {
@@ -131,6 +131,7 @@ public class Player extends Entity {
                     break;
             }
         }
+        updateAnimationTick();
 
         // PLAYER MOVEMENT
         // isMoving = false;
