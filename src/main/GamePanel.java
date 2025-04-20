@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import input.KeyHandler;
 import input.MouseHandler;
+import levels.CollisionChecker;
 import levels.LevelManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -27,11 +28,12 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 120;
 
     // initialization
-    private KeyHandler keyH = new KeyHandler();
-    private MouseHandler mouseH = new MouseHandler(this);
-    private Player player = new Player(this, keyH);
-    private LevelManager levelM = new LevelManager(this);
+    public LevelManager levelM = new LevelManager(this);
+    KeyHandler keyH = new KeyHandler();
+    MouseHandler mouseH = new MouseHandler(this);
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    private Player player = new Player(this, keyH);
 
     public GamePanel() {
 

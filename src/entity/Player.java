@@ -1,39 +1,37 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import input.KeyHandler;
 import main.GamePanel;
 import utils.LoadSave;
 
 public class Player extends Entity {
-
-    private String previousAction = "";
-
     private GamePanel gp;
     private KeyHandler keyH;
     private BufferedImage[] playerAnimation;
     public BufferedImage img;
 
-    // D akin
-    private boolean isJumping = false;
-    private boolean isMoving = false;
-    private int groundY; // Adjust based on ground level in your game
-
     public Player(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
         this.gp = gp;
+        solidArea = new Rectangle();
+        solidArea.x = 4;
+        solidArea.y = 0;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
         setDefaultValues();
         updatePlayerAnimation();
     }
 
     public void setDefaultValues() {
-        groundY = gp.TILESIZE * 11;
-        velocityY = 0;
-        x = 100;
-        y = groundY;
+        worldX = 100;
+        worldY = 100;
         speed = 2;
-        action = "IDLE";
+        actionSprite = "IDLE";
+        actionMovement = "";
 
         // for animation
         aniTick = 0;
@@ -42,20 +40,15 @@ public class Player extends Entity {
     }
 
     public void update() {
+
         playerMovement();
-
-        if (!action.equals(previousAction)) {
-            updatePlayerAnimation();
-            previousAction = action;
-        }
-
         updateAnimationTick();
     }
 
     // stops player if go to other window
     public void resetMoveBoleans() {
 
-        action = "IDLE";
+        actionSprite = "IDLE";
         keyH.leftPressed = false;
         keyH.rightPressed = false;
         keyH.upPressed = false;
@@ -63,7 +56,7 @@ public class Player extends Entity {
     }
 
     public void updatePlayerAnimation() {
-        img = switch (action) {
+        img = switch (actionSprite) {
             case "IDLE" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_IDLE);
             case "ATTACK1" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK1);
             case "ATTACK2" -> LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATTACK2);
@@ -99,58 +92,103 @@ public class Player extends Entity {
     }
 
     public void playerMovement() {
-        isMoving = false;
+        if (keyH.upPressed == true || keyH.downPressed == true ||
+                keyH.leftPressed == true || keyH.rightPressed == true) {
+            if (keyH.upPressed == true) {
+                actionSprite = "JUMP";
+                actionMovement = "JUMP";
 
-        // Horizontal movement
-        if (keyH.leftPressed) {
-            x -= speed;
-            isMoving = true;
-        }
-        if (keyH.rightPressed) {
-            x += speed;
-            isMoving = true;
-        }
+            } else if (keyH.downPressed == true) {
+                actionSprite = "IDLE";
+                actionMovement = "DOWN";
 
-        // Set run animation if on ground and moving
-        if (isMoving && !isJumping && !action.equals("RUN")) {
-            action = "RUN";
-        }
+            } else if (keyH.leftPressed == true) {
+                actionSprite = "RUN";
+                actionMovement = "LEFT";
 
-        // Jumping
-        if (keyH.upPressed && !isJumping) {
-            isJumping = true;
-            velocityY = JUMPSTRENGTH;
-            if (!action.equals("JUMP")) {
-                action = "JUMP";
+            } else if (keyH.rightPressed == true) {
+                actionSprite = "RIGHT";
+                actionMovement = "RIGHT";
+            }
+        }
+        // check tile collision
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+        // IF collision is false, player can move
+        if (collisionOn == false) {
+            switch (actionMovement) {
+                case "JUMP":
+                    worldY -= speed;
+                    break;
+                case "DOWN":
+                    worldY += speed;
+                    break;
+                case "LEFT":
+                    worldX -= speed;
+                    break;
+                case "RIGHT":
+                    worldX += speed;
+                    break;
             }
         }
 
-        // Apply gravity
-        if (isJumping) {
-            y += velocityY;
-            velocityY += GRAVITY;
+        // PLAYER MOVEMENT
+        // isMoving = false;
 
-            if (y >= groundY) {
-                y = groundY;
-                isJumping = false;
-                velocityY = 0;
-                if (isMoving && !action.equals("RUN")) {
-                    action = "RUN";
-                } else if (!isMoving && !action.equals("IDLE")) {
-                    action = "IDLE";
-                }
-            }
-        }
+        // // Horizontal movement
+        // if (keyH.leftPressed) {
+        // worldX -= speed;
+        // actionMovement = "LEFT";
+        // isMoving = true;
+        // }
+        // if (keyH.rightPressed) {
+        // worldX += speed;
+        // actionMovement = "RIGHT";
+        // isMoving = true;
+        // }
 
-        // Idle state
-        if (!isMoving && !keyH.upPressed && !isJumping && !action.equals("IDLE")) {
-            action = "IDLE";
-        }
+        // // Set run animation if on ground and moving
+        // if (isMoving && !isJumping && !actionSprite.equals("RUN")) {
+        // actionSprite = "RUN";
+        // }
+
+        // // Jumping
+        // if (keyH.upPressed && !isJumping) {
+        // isJumping = true;
+        // velocityY = JUMPSTRENGTH;
+        // if (!actionSprite.equals("JUMP")) {
+        // actionSprite = "JUMP";
+        // }
+        // }
+
+        // // Apply gravity
+        // if (isJumping) {
+        // worldY += velocityY;
+        // velocityY += GRAVITY;
+
+        // if (worldY >= groundY) {
+        // worldY = groundY;
+        // isJumping = false;
+        // velocityY = 0;
+        // if (isMoving && !actionSprite.equals("RUN")) {
+        // actionSprite = "RUN";
+        // } else if (!isMoving && !actionSprite.equals("IDLE")) {
+        // actionSprite = "IDLE";
+        // }
+        // }
+        // }
+
+        // // Idle state
+        // if (!isMoving && !keyH.upPressed && !isJumping &&
+        // !actionSprite.equals("IDLE")) {
+        // actionMovement = "DOWN";
+        // actionSprite = "IDLE";
+        // }
     }
 
     public void draw(Graphics2D g2) {
         if (playerAnimation != null && aniIndex < playerAnimation.length) {
-            g2.drawImage(playerAnimation[aniIndex], x, y, gp.TILESIZE, gp.TILESIZE, null);
+            g2.drawImage(playerAnimation[aniIndex], worldX, worldY, gp.TILESIZE, gp.TILESIZE, null);
         }
     }
 }

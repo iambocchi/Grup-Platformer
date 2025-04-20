@@ -12,7 +12,7 @@ public class LevelManager {
     private GamePanel gp;
     public Tile[] tile;
     BufferedImage[][] levelSprite;
-    int mapTileNum[][];
+    public int mapTileNum[][];
     String map = "";
 
     public LevelManager(GamePanel gp) {
@@ -92,6 +92,11 @@ public class LevelManager {
                 }
                 tile[tileIndex] = new Tile();
                 tile[tileIndex].image = levelSprite[i][j];
+                // which tile has collision
+                // still need to be modified to be universal
+                if (tile[tileIndex] != tile[11]) {
+                    tile[tileIndex].collision = true;
+                }
                 tileIndex++;
                 System.out.println(totalRows + " || " + totalCols);
             }

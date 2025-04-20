@@ -1,23 +1,28 @@
 package entity;
 
+import java.awt.Rectangle;
+
 public class Entity {
-    protected int speed;
-    protected int defaultStance;
-    protected String action;
-    protected int x, y;
-    protected int width;
-    protected int height;
+    public int speed;
+    public int defaultStance;
+    public String actionSprite;
+
+    public int worldY;
+    public int worldX;
+    public int width;
+    public int height;
+
+    // actionMovement
+    public String actionMovement;
 
     // for animation speed
-    protected int aniTick;
-    protected int aniIndex;
-    protected int aniSpeed;
+    public int aniTick;
+    public int aniIndex;
+    public int aniSpeed;
 
-    // not permanet -> ill add collision then remove this
-    // alter player movemnet
-    protected double velocityY = 0;
-    protected final double GRAVITY = 0.3;
-    protected final double JUMPSTRENGTH = -8;
+    // collision
+    public Rectangle solidArea;
+    public boolean collisionOn = false;
 
     public Entity() {
 
