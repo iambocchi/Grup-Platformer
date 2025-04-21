@@ -20,7 +20,7 @@ public class LevelManager {
         tile = new Tile[48];
         mapTileNum = new int[gp.MAXSCREENROW][gp.MAXSCREENCOL];
         // insert the tileset to get each subimage -> 32 x 32 pixel
-        initTileset(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST));
+        initTileset(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST), 11);
 
         // sets the map
         setMap("MAP_01");
@@ -65,7 +65,7 @@ public class LevelManager {
     }
 
     /* for 32 x 32 pixel */
-    private void initTileset(BufferedImage tileset) {
+    private void initTileset(BufferedImage tileset, int indexNoCollision) {
         if (tileset == null)
             return;
 
@@ -94,7 +94,7 @@ public class LevelManager {
                 tile[tileIndex].image = levelSprite[i][j];
                 // which tile has collision
                 // still need to be modified to be universal
-                if (tile[tileIndex] != tile[11]) {
+                if (tile[tileIndex] != tile[indexNoCollision]) {
                     tile[tileIndex].collision = true;
                 }
                 tileIndex++;
