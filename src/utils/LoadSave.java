@@ -23,7 +23,7 @@ public class LoadSave {
     public static final String TILESET_FOREST = "outside_sprites.png";
 
     // MAPS
-    public static final String MAP_01 = "maps/map01.txt";
+    public static final String MAP_01 = "maps/map2.txt";
 
     // GET MAP
     public static BufferedReader GetMap(String filename) {
