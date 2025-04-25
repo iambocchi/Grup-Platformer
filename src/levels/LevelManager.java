@@ -23,7 +23,7 @@ public class LevelManager {
         initTileset(LoadSave.GetSpriteAtlas(LoadSave.TILESET_FOREST), 11);
 
         // sets the map
-        setMap("MAP_01");
+        setMap("MAP_02");
 
         // loads the map
         loadMap();
@@ -33,6 +33,7 @@ public class LevelManager {
     public void setMap(String maplist) {
         switch (maplist) {
             case "MAP_01" -> map = LoadSave.MAP_01;
+            case "MAP_02" -> map = LoadSave.MAP_02;
             default -> System.out.println("no map");
         }
     }
